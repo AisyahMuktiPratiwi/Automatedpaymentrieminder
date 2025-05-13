@@ -15,7 +15,7 @@ class AdminController extends Controller
     public function index()
     {
         $jumlahFasilitas = Fasilitas::count();
-         $jumlahPelanggan = Pelanggan::count();
+     $jumlahPelanggan = Pelanggan::where('status', 'aktif')->count();
          $jumlahpintu =JumlahPintu::all();
          return view('admin.dashboard', compact('jumlahFasilitas', 'jumlahPelanggan', 'jumlahpintu'));
     }
@@ -52,11 +52,13 @@ class AdminController extends Controller
     public function showPembayaran(Request $request)
     {
         // Use paginate for proper pagination
+
         $pembayaransQuery = Pembayaran::with('pelanggan')->orderBy('tanggal_pembayaran', 'desc');
 
         // Filter berdasarkan pelanggan_id
         if ($request->filled('pelanggan_id')) {
             $pembayaransQuery->where('pelanggan_id', $request->pelanggan_id);
+
         }
 
         // Filter berdasarkan bulan
@@ -65,7 +67,8 @@ class AdminController extends Controller
         }
 
         // Apply pagination
-        $pembayarans = $pembayaransQuery->paginate(6);
+      $pembayarans = $pembayaransQuery->paginate(6)->appends($request->all());
+
 
         // Ambil daftar pelanggan untuk dropdown
         $pelangganList = Pelanggan::all();
@@ -74,27 +77,28 @@ class AdminController extends Controller
         $semuaBulan = [];
 
         // Looping setiap pelanggan untuk menentukan bulan belum dibayar
-        foreach ($pelangganList as $pelanggan) {
-            $bulanMulai = \Carbon\Carbon::parse($pelanggan->tanggal_mulai_sewa);
-            $bulanSekarang = \Carbon\Carbon::now();
-            $belumDibayar = [];
+      foreach ($pelangganList as $pelanggan) {
+    $bulanMulai = \Carbon\Carbon::parse($pelanggan->tanggal_mulai_sewa);
+    $bulanSekarang = \Carbon\Carbon::now();
+    $belumDibayar = [];
 
-            while ($bulanMulai <= $bulanSekarang) {
-                $format = $bulanMulai->format('Y-m');
+    while ($bulanMulai <= $bulanSekarang) {
+        $format = $bulanMulai->format('Y-m');
 
-                $pembayaran = $pembayarans->first(function ($item) use ($pelanggan, $format) {
-                    return $item->pelanggan_id == $pelanggan->id && $item->bulan == $format;
-                });
+        $sudahBayar = \App\Models\Pembayaran::where('pelanggan_id', $pelanggan->id)
+            ->where('bulan', $format)
+            ->exists();
 
-                if (!$pembayaran) {
-                    $belumDibayar[] = $format;
-                }
-
-                $bulanMulai->addMonth();
-            }
-
-            $semuaBulan[$pelanggan->id] = $belumDibayar;
+        if (!$sudahBayar) {
+            $belumDibayar[] = $format;
         }
+
+        $bulanMulai->addMonth();
+    }
+
+    $semuaBulan[$pelanggan->id] = $belumDibayar;
+}
+
 
         return view('admin.konfirmasi', compact('pembayarans', 'pelangganList', 'semuaBulan'));
     }

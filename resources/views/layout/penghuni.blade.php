@@ -33,7 +33,7 @@
 
         <!-- Preloader -->
         <div class="preloader flex-column justify-content-center align-items-center">
-            <img class="animation__wobble" src="{{ asset('template/dist/img/logo.png') }}" alt="AdminLTELogo"
+            <img class="animation__wobble" src="{{ asset('template/dist/img/logu.png') }}" alt="AdminLTELogo"
                 height="60" width="60">
         </div>
 
@@ -76,7 +76,7 @@
         <aside class="main-sidebar sidebar-dark-primary elevation-4" style="background-color:#7dacd8;">
             <!-- Brand Logo -->
             <a href="/" class="brand-link" style="background-color:#7dacd8;">
-                <img src="{{ asset('template/dist/img/logo.png') }}"
+                  <img src="{{ asset('template/dist/img/logu.png') }}"
                   width="50px">
                 <span class="brand-text font-weight-light">Kontrami</span>
             </a>

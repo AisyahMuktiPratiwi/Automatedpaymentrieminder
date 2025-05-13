@@ -88,7 +88,7 @@
       text-align: center;
       font-weight: bold;
       color: #fff;
-      background: linear-gradient(45deg, #e53935, #e35d5b);
+      background: linear-gradient(45deg,rgb(216, 202, 187), rgb(216, 202, 187));
       margin-top: 20px;
       padding: 14px;
       position: relative;
@@ -104,7 +104,7 @@
       content: '';
       width: 100%;
       height: 26px;
-      background: linear-gradient(45deg, #d32f2f, #c62828);
+      background: linear-gradient(45deg,rgb(216, 202, 187), rgb(216, 202, 187));
       position: absolute;
       left: 0;
     }
@@ -126,13 +126,13 @@
       top: 0;
     }
     .side-left-right::before {
-      background: #e53935;
+      background:rgb(216, 202, 187);
       transform-origin: left center;
       transform: rotateY(90deg);
       left: 0;
     }
     .side-left-right::after {
-      background: #e35d5b;
+      background:rgb(216, 202, 187);
       transform-origin: right center;
       transform: rotateY(-90deg);
       right: 0;
@@ -186,7 +186,7 @@
 
     <div class="field email">
       <div class="icon"></div>
-      <input type="text" name="nohp" id="email" class="input @error('nohp') is-invalid @enderror" placeholder="Nomor HP" value="{{ old('nohp') }}">
+      <input type="text" name="nohp" id="email" class="input @error('nohp') is-invalid @enderror" placeholder="Nomor HP" value="{{ old('nohp') }}" required>
       @error('nohp')
         <small>{{ $message }}</small>
       @enderror
@@ -194,7 +194,7 @@
 
     <div class="field password">
       <div class="icon"></div>
-      <input type="password" name="password" id="password" class="input @error('password') is-invalid @enderror" placeholder="Kata Sandi">
+      <input type="password" name="password" id="password" class="input @error('password') is-invalid @enderror" placeholder="Kata Sandi" required>
       @error('password')
         <small>{{ $message }}</small>
       @enderror

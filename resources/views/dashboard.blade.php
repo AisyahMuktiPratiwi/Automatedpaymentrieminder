@@ -74,15 +74,15 @@
                 <div class="col-sm-12">
                     <div class="card" style="background-color :rgb(231, 231, 231); box-shadow: #7dacd8 5px 6px 12px;">
                         <div class="card-body">
-                            <h1 style="text-align:center; color: rgb(156, 161, 189); font-family: 'Quintessential', cursive;"><b>Histori Pembayaran</b></h1>
+                            <h1 style="text-align:center; color: rgb(156, 161, 189); font-family: 'Quintessential', cursive;"><b>Riwayat Pembayaran</b></h1>
                         </div>
                     </div>
-                    <div class="col-sm-6 text-end">
+                    {{-- <div class="col-sm-6 text-end">
                         <ol class="breadcrumb mb-4">
                             <li class="breadcrumb-item"><a href="{{route('admin.dashboard')}}" style="color:rgb(179, 179, 179)">Home</a></li>
-                            <li class="breadcrumb-item active" style="color: rgb(98, 108, 173)">Histori Pembayaran</li>
+                            <li class="breadcrumb-item active" style="color: rgb(98, 108, 173)">Riwayat Pembayaran</li>
                         </ol>
-                    </div>
+                    </div> --}}
                 </div>
             </div>
         </div>
@@ -110,7 +110,7 @@
                        + Upload Pembayaran
                     </button>
 
-                    <p for="text" class="font-bold text-lg  text-end mb-1 mt-1 cursor-pointer" style="color: rgb(100, 96, 90); ">No Rekening: 868667565645454342</p>
+                    <p for="text" class="font-bold text-lg  text-end mb-1 mt-1 cursor-pointer" style="color: rgb(100, 96, 90); ">No Rekening: 7115101641</p>
 
                 </div>
 
@@ -134,7 +134,9 @@
                                     <td>{{ $row->tanggal_pembayaran ?? '-' }}</td>
                                     <td>
                                         @if($row->bukti_bayar)
+                                           <a href="{{ asset('storage/' . $row->bukti_bayar) }}" target="_blank">
                                         <img src="{{ asset('storage/' . $row->bukti_bayar) }}" alt="Bukti" width="80" height="80" style="object-fit: cover; border-radius: 6px;">
+                                           </a>
                                     @else
                                         -
                                     @endif
@@ -143,6 +145,11 @@
                             @endforeach
                         </tbody>
                     </table>
+
+                        <p class="text-end text-muted">Total data: {{ $histori->total() }}</p>
+                    <div class="d-flex justify-content-end mt-4">
+                        {{ $histori->links('pagination::bootstrap-4') }}
+                    </div>
                 </div>
 
 
@@ -168,7 +175,7 @@
 
                                     <div class="mb-3">
                                         <label for="bukti_bayar" class="form-label">Upload Bukti:</label>
-                                        <input type="file" name="bukti_bayar" class="form-control" accept="image/*" required>
+                                        <input type="file" name="bukti_bayar" class="form-control" accept="image/*" required  onchange="validateImageFile(this)">
                                     </div>
                                 </div>
                                 <div class="modal-footer">
@@ -184,5 +191,14 @@
         </div>
     </div>
 </div>
+<script>
+    function validateImageFile(input) {
+        const file = input.files[0];
+        if (file && !file.type.startsWith('image/')) {
+            alert('Hanya file gambar yang diperbolehkan (jpg, jpeg, png, dll)');
+            input.value = ''; // Reset input file
+        }
+    }
+</script>
 
 @endsection

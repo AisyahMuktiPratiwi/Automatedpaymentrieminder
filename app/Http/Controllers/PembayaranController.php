@@ -14,19 +14,22 @@ class PembayaranController extends Controller
     //
     public function dashboard()
 {
+ $user = Auth::guard('pelanggan')->user();
 
-    $user = Auth::guard('pelanggan')->user();
-    $histori = Pembayaran::where('pelanggan_id', $user->id)->get();
+    // Ambil semua histori untuk filter bulan
+    $allHistori = Pembayaran::where('pelanggan_id', $user->id)->get();
 
+    // Untuk tampilan table, kita pakai yang paginate
+    $histori = Pembayaran::where('pelanggan_id', $user->id)->orderBy('bulan', 'desc')->paginate(5);
 
-    // Bulan dalam format y-m
+    // Buat array semua bulan dari mulai sewa hingga sekarang
     $bulanMulai = \Carbon\Carbon::parse($user->tanggal_mulai_sewa);
     $bulanSekarang = \Carbon\Carbon::now();
     $semuaBulan = [];
 
     while ($bulanMulai <= $bulanSekarang) {
         $format = $bulanMulai->format('Y-m');
-        if (!$histori->contains('bulan', $format)) {
+        if (!$allHistori->contains('bulan', $format)) {
             $semuaBulan[] = $format;
         }
         $bulanMulai->addMonth();

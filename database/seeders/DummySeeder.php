@@ -14,41 +14,57 @@ class DummySeeder extends Seeder
     {
         $today = Carbon::today();
 
-        // Pelanggan 1: Sewa dimulai bulan lalu
-        $tanggalSewaPelanggan1 = $today->copy()->subMonth()->setDay($today->day);
+        // Pelanggan 1: 1 bulan sebelum hari ini
+        $tanggalSewa1 = $today->copy()->subMonth();
         $pelanggan1 = Pelanggan::create([
-            'nama' => 'Aisyah',
+            'nama' => 'tiwi',
             'nohp' => '6281319894484',
             'password' => Hash::make('password'),
-            'tanggal_mulai_sewa' => $tanggalSewaPelanggan1->toDateString(),
+            'tanggal_mulai_sewa' => $tanggalSewa1->toDateString(),
             'status' => 'aktif',
         ]);
-
         Pembayaran::create([
             'pelanggan_id' => $pelanggan1->id,
-            'bulan' => Carbon::parse($pelanggan1->tanggal_mulai_sewa)->format('F Y'),
+            'bulan' => $tanggalSewa1->format('F Y'),
             'konfirmasi' => 'sudah di konfirmasi',
             'status_pembayaran' => 'sudah bayar',
-            'tanggal_pembayaran' => null,
+            'tanggal_pembayaran' => $tanggalSewa1->toDateString(),
             'bukti_bayar' => null,
         ]);
 
-        // Pelanggan 2: Sewa dimulai awal bulan lalu
-        $tanggalSewaPelanggan2 = $today->copy()->subMonth()->startOfMonth();
+        // Pelanggan 2: 28 hari sebelum hari ini
+        $tanggalSewa2 = $today->copy()->subDays(28);
         $pelanggan2 = Pelanggan::create([
             'nama' => 'Mia',
             'nohp' => '6289518850475',
             'password' => Hash::make('password'),
-            'tanggal_mulai_sewa' => $tanggalSewaPelanggan2->toDateString(),
+            'tanggal_mulai_sewa' => $tanggalSewa2->toDateString(),
             'status' => 'aktif',
         ]);
-
         Pembayaran::create([
             'pelanggan_id' => $pelanggan2->id,
-            'bulan' => Carbon::parse($pelanggan2->tanggal_mulai_sewa)->format('F Y'),
+            'bulan' => $tanggalSewa2->format('F Y'),
             'konfirmasi' => 'sudah di konfirmasi',
             'status_pembayaran' => 'sudah bayar',
-            'tanggal_pembayaran' => null,
+            'tanggal_pembayaran' => $tanggalSewa2->toDateString(),
+            'bukti_bayar' => null,
+        ]);
+
+        // Pelanggan 3: 35 hari sebelum hari ini
+        $tanggalSewa3 = $today->copy()->subDays(35);
+        $pelanggan3 = Pelanggan::create([
+            'nama' => 'mflh',
+            'nohp' => '6281382206488',
+            'password' => Hash::make('password'),
+            'tanggal_mulai_sewa' => $tanggalSewa3->toDateString(),
+            'status' => 'aktif',
+        ]);
+        Pembayaran::create([
+            'pelanggan_id' => $pelanggan3->id,
+            'bulan' => $tanggalSewa3->format('F Y'),
+            'konfirmasi' => 'sudah di konfirmasi',
+            'status_pembayaran' => 'sudah bayar',
+            'tanggal_pembayaran' => $tanggalSewa3->toDateString(),
             'bukti_bayar' => null,
         ]);
     }

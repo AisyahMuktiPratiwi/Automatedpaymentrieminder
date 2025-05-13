@@ -22,7 +22,7 @@ class AuthController extends Controller
         // Validasi input
         $validated = $request->validate([
             'nohp' => 'required|numeric',
-            'password' => 'required|min:6',
+            'password' => 'required|min:8',
         ]);
 
         // Autentikasi dengan guard yang sesuai

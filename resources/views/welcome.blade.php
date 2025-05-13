@@ -252,6 +252,8 @@
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div class="flex justify-between items-center py-4">
         <div class="hidden md:flex space-x-8">
+               <img src="{{ asset('template/dist/img/logu.png') }}"
+                  width="30px">
           <a href="/" class="nav-link text-white font-semibold text-sm hover:text-[#d8cabb] transition-colors">Beranda</a>
           <a href="#layanan" class="nav-link text-white font-semibold text-sm hover:text-[#d8cabb] transition-colors">Layanan</a>
           <a href="#tentangkami" class="nav-link text-white font-semibold text-sm hover:text-[#d8cabb] transition-colors">Tentang Kami</a>
@@ -299,10 +301,16 @@
       <p class="text-white text-sm sm:text-base md:text-lg drop-shadow-md max-w-2xl mb-4">
         Silakan Anda dapat melihat semua yang tersedia dalam kontrakan ini serta melakukan sewa. Jika ada yang ingin ditanyakan:
       </p>
-      <a href="https://wa.me/6281234567890" target="_blank" class="text-white font-semibold px-4 py-2 rounded-full flex items-center space-x-2 transition animate-[blink_1.5s_ease-in-out_infinite]" style="background-color: rgb(216, 202, 187);">
+      <a href="https://wa.me/6281382206488" target="_blank"  class="text-white font-semibold px-4 py-2 rounded-full flex items-center space-x-2 transition animate-[blink_1.5s_ease-in-out_infinite] mb-2" style="background-color: rgb(216, 202, 187);">
         <i class="fab fa-whatsapp text-lg"></i>
         <span>Hubungi Kami</span>
       </a>
+
+
+
+  <h6 class="text-white text-l sm:text-xl md:text-2xl font-bold drop-shadow-lg " style="font-family: Quintessential, serif;">Hanya Mulai Dengan <span style="background-color: rgb(216, 202, 187)">Rp.500.000,00 </span></h6>
+    <p  class="text-white text-sm sm:text-base md:text-lg drop-shadow-md max-w-2xl "> Segera Daftar !!!</p>
+
     </div>
 
   <img
@@ -345,9 +353,11 @@
         </div>
 
         <div class="flex flex-col w-full max-w-xs sm:max-w-sm md:w-44 fade-in-up">
-            <label for="nohp" class="font-bold text-sm mb-1 cursor-pointer text-white">Nomor HP</label>
-            <input id="nohp" type="text" name="nohp" value="{{ old('nohp') }}" class="border border-white/70 bg-transparent rounded px-3 py-2 text-sm text-white placeholder-white focus:outline-none focus:ring-2 focus:ring-white" placeholder="gunakan 62" required>
-        </div>
+    <label for="nohp" class="font-bold text-sm mb-1 cursor-pointer text-white">Nomor HP</label>
+    <input id="nohp" type="text" name="nohp" value="{{ old('nohp') }}" class="border border-white/70 bg-transparent rounded px-3 py-2 text-sm text-white placeholder-white focus:outline-none focus:ring-2 focus:ring-white" placeholder="gunakan 62" required oninput="validateNoHp()">
+</div>
+
+
 
         <div class="flex flex-col w-full max-w-xs sm:max-w-sm md:w-44 fade-in-up">
             <label for="password" class="font-bold text-sm mb-1 cursor-pointer text-white">Password</label>
@@ -361,8 +371,8 @@
 
         <div class="flex flex-col w-full max-w-xs sm:max-w-sm md:w-44 fade-in-up">
             <label for="bukti_bayar" class="font-bold text-sm mb-1 cursor-pointer text-white">Bukti Pembayaran</label>
-            <input id="bukti_bayar" type="file" name="bukti_bayar" class="text-sm text-white" required>
-            <p for="text" class="font-bold text-xs text-center mb-1 cursor-pointer" style="font-size: x-small; color: rgb(100, 96, 90); background-color: azure;">No Rekening: 868667565645454342</p>
+            <input id="bukti_bayar" type="file" name="bukti_bayar" class="text-sm text-white" required  onchange="validateImageFile(this)">
+            <p for="text" class="font-bold text-xs text-center mb-1 cursor-pointer" style="font-size: x-small; color: rgb(100, 96, 90); background-color: azure;">No Rekening: 7115101641</p>
         </div>
 
         <div class="flex items-end w-full max-w-xs sm:max-w-sm md:w-44 mx-auto fade-in-up">
@@ -455,19 +465,19 @@
       <div class="md:w-1/2 relative flex justify-center md:justify-start overflow-visible">
         <div class="parallelogram-container overflow-visible flex flex-wrap gap-4">
           <div class="image-wrapper">
-            <img src="images/kon1.jpeg" alt="..." class="scroll-image" />
+            <img src="images/room1.jpeg" alt="..." class="scroll-image" />
             <div class="curtain-overlay"></div>
           </div>
           <div class="image-wrapper">
-            <img src="images/kon1.jpeg" alt="..." class="scroll-image" />
+            <img src="images/room2.jpeg" alt="..." class="scroll-image" />
             <div class="curtain-overlay"></div>
           </div>
           <div class="image-wrapper">
-            <img src="images/kon1.jpeg" alt="..." class="scroll-image" />
+            <img src="images/room3.jpeg" alt="..." class="scroll-image" />
             <div class="curtain-overlay"></div>
           </div>
           <div class="image-wrapper">
-            <img src="images/kon1.jpeg" alt="..." class="scroll-image" />
+            <img src="images/room4.jpeg" alt="..." class="scroll-image" />
             <div class="curtain-overlay"></div>
           </div>
         </div>
@@ -631,5 +641,27 @@
       });
     });
   </script>
+  <script>
+    function validateNoHp() {
+        const nohpInput = document.getElementById('nohp');
+        const value = nohpInput.value;
+
+        // Memastikan input dimulai dengan '62'
+        if (!value.startsWith('62')) {
+            nohpInput.setCustomValidity('Nomor HP harus diawali dengan "62"');
+        } else {
+            nohpInput.setCustomValidity('');
+        }
+    }
+</script>
+<script>
+    function validateImageFile(input) {
+        const file = input.files[0];
+        if (file && !file.type.startsWith('image/')) {
+            alert('Hanya file gambar yang diperbolehkan (jpg, jpeg, png, dll)');
+            input.value = ''; // Reset input file
+        }
+    }
+</script>
 </body>
 </html>

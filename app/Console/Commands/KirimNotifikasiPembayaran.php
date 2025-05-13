@@ -35,13 +35,30 @@ class KirimNotifikasiPembayaran extends Command
 
                 if (!$sudahBayar) {
                     $dueDate = $tanggalCek->copy();
-                    $selisihHari = $today->diffInDays($dueDate, false); // false agar bisa negatif
+                   if($selisihHari2 = $dueDate->diffInDays($today, false)){
+                    $selisihHari2 = -2;
+                   }
 
-                    if ($selisihHari === -2) {
-                        $pesan = "🔔 Halo {$pelanggan->nama}, peringatan: hanya 2 hari lagi (jatuh tempo {$dueDate->translatedFormat('d F Y')}) untuk pembayaran kontrakan bulan {$tanggalCek->translatedFormat('F Y')}. Jangan sampai kelewatan ya. *Ini adalah pesan otomatis, mohon tidak dibalas.*";
+
+
+                   $selisihHari = $today->diffInDays($dueDate, false);
+
+                    if ($today->format('Y-m-d') === $dueDate->format('Y-m-d')) {
+                        $selisihHari = 0;
+                    }// false agar bisa negatif
+
+                    if ($selisihHari2 === -2) {
+                            $jumlahHariTerlambat = $dueDate->diffInDays($today);
+
+                        $pesan = "🔔 Halo {$pelanggan->nama}, peringatan jatuh tempo ({$dueDate->translatedFormat('d F Y')}) untuk pembayaran kontrakan bulan {$tanggalCek->translatedFormat('F Y')}. Hari ini adalah *hari ke {$jumlahHariTerlambat}* dari waktu jatuh tempo anda. Jangan lupa untuk dibayarkan yaaa, dan kirimkan bukti pembayaran melalui web Kontrami
+
+_pengingat ini akan dikirim h-2, Hari H, dan H+ jatuh tempo - dibayarkan_
+
+*Ini adalah pesan otomatis, mohon tidak dibalas.*";
                         $this->kirimFonnte($pelanggan->nohp, $pesan);
                     } elseif ($selisihHari === 0) {
-                        $pesan = "⚠️ Halo {$pelanggan->nama}, hari ini adalah jatuh tempo pembayaran kontrakan bulan {$tanggalCek->translatedFormat('F Y')} (tanggal {$dueDate->translatedFormat('d F Y')}). Segera bayarkan dan kirimkan bukti pembayaran via web Kontrami. *Ini adalah pesan otomatis, mohon tidak dibalas.*";
+                        $pesan = "⚠️ Halo {$pelanggan->nama}, hari ini adalah jatuh tempo pembayaran kontrakan bulan {$tanggalCek->translatedFormat('F Y')} (tanggal {$dueDate->translatedFormat('d F Y')}). Segera bayarkan dan kirimkan bukti pembayaran via web Kontrami.
+*Ini adalah pesan otomatis, mohon tidak dibalas.*";
                         $this->kirimFonnte($pelanggan->nohp, $pesan);
                     } elseif ($selisihHari < 0) {
                         $pesan = "❌ Halo {$pelanggan->nama}, sepertinya kamu masih belum membayar kontrakan bulan {$tanggalCek->translatedFormat('F Y')} (jatuh tempo {$dueDate->translatedFormat('d F Y')}). Ayo, jangan sampai tertunda terus! Mohon segera bayarkan dan kirimkan bukti pembayaran melalui web Kontrami. *Ini adalah pesan otomatis, mohon tidak dibalas.*";

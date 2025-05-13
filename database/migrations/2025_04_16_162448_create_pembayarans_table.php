@@ -15,8 +15,6 @@ return new class extends Migration
             $table->increments('id');
             $table->unsignedInteger('pelanggan_id');
             $table->foreign('pelanggan_id')->references('id')->on('pelanggans')->onDelete('cascade');
-
-
             $table->string('bulan', 20);
             $table->enum('konfirmasi', ['sudah di konfirmasi', 'menunggu konfirmasi'])->default('menunggu konfirmasi');
             $table->enum('status_pembayaran', ['sudah bayar', 'belum bayar'])->default('belum bayar');
