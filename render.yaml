@@ -1,0 +1,30 @@
+services:
+  - type: web
+    name: automated-payment-reminder
+    env: docker
+    plan: free
+    autoDeploy: true
+    region: oregon
+    envVars:
+      - key: APP_ENV
+        value: production
+      - key: APP_DEBUG
+        value: false
+      - key: APP_KEY
+        value: base64:bzjg2Jsph0xu0eaW1CQVwv0wAF9v6qoP3+ww5AATLFU=
+      - key: APP_URL
+        value: https://automated-payment-reminder.onrender.com
+      - key: DB_CONNECTION
+        value: mysql
+      - key: DB_HOST
+        value: sql5.freesqldatabase.com
+      - key: DB_PORT
+        value: 3306
+      - key: DB_DATABASE
+        value: sql5778693
+      - key: DB_USERNAME
+        value: sql5778693
+      - key: DB_PASSWORD
+        value: jK7MGgvATx
+      - key: FONNTE_TOKEN
+        value: zzqaQ3wQoudtPDGE8JRq
