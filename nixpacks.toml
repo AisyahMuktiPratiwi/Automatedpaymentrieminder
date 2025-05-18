@@ -4,6 +4,7 @@ nixPkgs = ["php82", "php82Packages.composer", "mysql80", "nodejs_20"]
 [phases.build]
 cmds = [
   "composer install --no-interaction --prefer-dist --optimize-autoloader",
+"composer dump-autoload",
   "npm ci",
   "npm run build",
   "php artisan config:clear",

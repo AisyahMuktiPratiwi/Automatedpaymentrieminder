@@ -2,11 +2,10 @@
     "name": "aisya/mykontrakan",
     "autoload": {
         "psr-4": {
-            "Aisya\\Mykontrakan\\": "src/"
+            "App\\": "app/"
         }
     },
     "authors": [
-        
         {
             "name": "AisyahMuktiPratiwi",
             "email": "aisyahmuktipratiwi67257@gmail.com"
