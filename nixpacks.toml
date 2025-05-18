@@ -1,12 +1,12 @@
 [phases.setup]
-nixPkgs = ["php", "composer", "mysql"]
+nixPkgs = ["php82", "php82Packages.composer", "mysql80"]
 
 [phases.build]
 cmds = [
   "composer install --no-interaction --prefer-dist --optimize-autoloader",
   "php artisan config:clear",
-  "php artisan route:clear",
-  "php artisan view:clear"
+  "php artisan key:generate",
+  "php artisan migrate --force || true"
 ]
 
 [phases.start]
